@@ -1,27 +1,31 @@
 import { asyncHandler } from '../utils/asyncHandler.js';
-import { ApiError } from '../utils/apiError.js';
+import { ApiError } from '../utils/ApiError.js';
 import { User } from '../models/user.model.js';
 import { uploadOnCloudinary } from '../utils/cloudinary.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 const registerUser = asyncHandler(async (req, res) => {
    
     const {fullName,email,username,password}=req.body
-    console.log("email:",email);
+   // console.log("email:",email);
 
     if([fullName,email,username,password].some((field)=>
     field?.trim()===""))
     {
         throw new ApiError(400,"all fields are required")
     }
-  const existedUser = User.findOne({ $or:[{email},{username}]
+  const existedUser = await  User.findOne({ $or:[{email},{username}]
   })
     if(existedUser)
     {
         throw new ApiError(409,"user with this email or username already exists")
     }
     const avatarLocalPath=req.files?.avatar[0]?.path;
-    const coverImagePath=req.files?.coverImage[0]?.path;
+   // const coverImagePath=req.files?.coverImage[0]?.path;
 
+   let coverImagePath = null;
+   if(req.files && req.files.coverImage && req.files.coverImage.length > 0) {
+       coverImagePath = req.files.coverImage[0].path;
+   }
     if(!avatarLocalPath)
     {
         throw new ApiError(400,"avatar is required")
@@ -53,7 +57,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     return res.status(201).json(
         new ApiResponse(200,createdUser,"user created successfully")
-    )
+     )
 
 
 });
