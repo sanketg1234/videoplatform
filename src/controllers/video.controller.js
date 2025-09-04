@@ -33,7 +33,6 @@ const getAllVideos = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, { videos, total, page, limit }, "Videos fetched successfully"));
 });
 
-// ✅ Publish a new video
 const publishAVideo = asyncHandler(async (req, res) => {
   const { title, description } = req.body;
 
@@ -70,7 +69,6 @@ const publishAVideo = asyncHandler(async (req, res) => {
   return res.status(201).json(new ApiResponse(201, newVideo, "Video published successfully"));
 });
 
-// ✅ Get video by ID
 const getVideoById = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
 
@@ -83,11 +81,11 @@ const getVideoById = asyncHandler(async (req, res) => {
   if (!video) {
     throw new ApiError(404, "Video not found");
   }
-
+  video.views += 1;
+  await video.save();
   return res.status(200).json(new ApiResponse(200, video, "Video fetched successfully"));
 });
 
-// ✅ Update video details
 const updateVideo = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
   const { title, description } = req.body;
@@ -120,7 +118,6 @@ const updateVideo = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, video, "Video updated successfully"));
 });
 
-// ✅ Delete video
 const deleteVideo = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
 
@@ -143,7 +140,6 @@ const deleteVideo = asyncHandler(async (req, res) => {
   return res.status(200).json(new ApiResponse(200, {}, "Video deleted successfully"));
 });
 
-// ✅ Toggle publish/unpublish
 const togglePublishStatus = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
 
