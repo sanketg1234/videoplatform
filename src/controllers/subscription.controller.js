@@ -5,8 +5,6 @@ import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
 
-
-// Toggle subscription (subscribe/unsubscribe)
 const toggleSubscription = asyncHandler(async (req, res) => {
     const { channelId } = req.params
 
@@ -14,7 +12,6 @@ const toggleSubscription = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Invalid channelId")
     }
 
-    // Prevent subscribing to self
     if (req.user._id.toString() === channelId) {
         throw new ApiError(400, "You cannot subscribe to yourself")
     }
@@ -25,14 +22,12 @@ const toggleSubscription = asyncHandler(async (req, res) => {
     })
 
     if (existingSub) {
-        // Already subscribed → unsubscribe
         await Subscription.findByIdAndDelete(existingSub._id)
         return res
             .status(200)
             .json(new ApiResponse(200, {}, "Unsubscribed successfully"))
     }
 
-    // Otherwise → subscribe
     const newSub = await Subscription.create({
         subscriber: req.user._id,
         channel: channelId,

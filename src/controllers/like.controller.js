@@ -4,7 +4,6 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
-// Toggle like on a video
 const toggleVideoLike = asyncHandler(async (req, res) => {
     const { videoId } = req.params;
 
@@ -34,7 +33,6 @@ const toggleVideoLike = asyncHandler(async (req, res) => {
         .json(new ApiResponse(201, {}, "Video liked successfully"));
 });
 
-// Toggle like on a comment
 const toggleCommentLike = asyncHandler(async (req, res) => {
     const { commentId } = req.params;
 
@@ -64,7 +62,6 @@ const toggleCommentLike = asyncHandler(async (req, res) => {
         .json(new ApiResponse(201, {}, "Comment liked successfully"));
 });
 
-// Toggle like on a tweet
 const toggleTweetLike = asyncHandler(async (req, res) => {
     const { tweetId } = req.params;
 
@@ -94,7 +91,6 @@ const toggleTweetLike = asyncHandler(async (req, res) => {
         .json(new ApiResponse(201, {}, "Tweet liked successfully"));
 });
 
-// Get all liked videos of a user
 const getLikedVideos = asyncHandler(async (req, res) => {
     const likedVideos = await Like.find({
         likedBy: req.user._id,

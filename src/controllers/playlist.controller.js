@@ -4,7 +4,6 @@ import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
 
-// Create Playlist
 const createPlaylist = asyncHandler(async (req, res) => {
     const { name, description } = req.body
 
@@ -24,7 +23,6 @@ const createPlaylist = asyncHandler(async (req, res) => {
         .json(new ApiResponse(201, playlist, "Playlist created successfully"))
 })
 
-// Get all playlists of a user
 const getUserPlaylists = asyncHandler(async (req, res) => {
     const { userId } = req.params
 
@@ -39,7 +37,6 @@ const getUserPlaylists = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, playlists, "User playlists fetched successfully"))
 })
 
-// Get playlist by ID
 const getPlaylistById = asyncHandler(async (req, res) => {
     const { playlistId } = req.params
 
@@ -58,7 +55,6 @@ const getPlaylistById = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, playlist, "Playlist fetched successfully"))
 })
 
-// Add video to playlist
 const addVideoToPlaylist = asyncHandler(async (req, res) => {
     const { playlistId, videoId } = req.params
 
@@ -85,7 +81,6 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, playlist, "Video added to playlist"))
 })
 
-// Remove video from playlist
 const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
     const { playlistId, videoId } = req.params
 
@@ -109,7 +104,6 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, playlist, "Video removed from playlist"))
 })
 
-// Delete playlist
 const deletePlaylist = asyncHandler(async (req, res) => {
     const { playlistId } = req.params
 
@@ -128,7 +122,6 @@ const deletePlaylist = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, {}, "Playlist deleted successfully"))
 })
 
-// Update playlist
 const updatePlaylist = asyncHandler(async (req, res) => {
     const { playlistId } = req.params
     const { name, description } = req.body
