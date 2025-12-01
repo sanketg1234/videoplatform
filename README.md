@@ -1,6 +1,6 @@
 # VideoPlatform
 
-A full-featured video platform built with Node.js, Express, MongoDB, and React. Supports features like video publishing, comments, likes, playlists, subscriptions, and more!
+A full-featured backend of video platform built with Node.js, Express, MongoDB. Supports features like video publishing, comments, likes, playlists, subscriptions, and more!
 
 ---
 
